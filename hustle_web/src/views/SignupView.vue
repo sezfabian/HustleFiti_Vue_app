@@ -1,28 +1,43 @@
 <template>
   <div>
     <main>
-      <section class="absolute w-full h-full bg-gradient-to-tr from-emerald-200 to-gray-300" >
+      <section id="view" class="absolute w-full h-full" >
         <div
           class="absolute top-0 w-full h-full bg-#045b4c"
         ></div>
         <div class="container mx-auto px-4 h-full">
           <div class="flex content-center items-center justify-center h-full">
-            <div class="w-full lg:w-5/12 px-4 mt-40">
+            <div class="w-full lg:w-5/12 px-4 mt-0">
               <div
-                class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-200 border-0"
+                class="relative flex flex-col min-w-100 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-200 border-0 form"
               >
-                <div class="rounded-t mb-0 px-6 py-2">
+                <div class="rounded-t mb-0 px-6 py-6">
                   <div class="text-center mb-3">
-                    <h6 class="text-gray-600 text-sm font-bold relative flex">
-                      <img alt="..."
-                        class="h-13 mr-5 border-b-2 border-gray-400"
-                        src="../assets/img/favicon.png">
+                    <h6 class="text-gray-600 text-sm font-bold">
+                      Sign up with
                     </h6>
                   </div>
+                  <div class="btn-wrapper text-center">
+                    <button
+                      class="bg-white active:bg-gray-100 text-gray-800 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-2xl inline-flex items-center text-xs"
+                      type="button"
+                      style="transition: all 0.15s ease 0s;"
+                    >
+                      <img
+                        alt="..."
+                        class="w-5 mr-1"
+                        src="../assets/img/google.svg"
+                      />Google
+                    </button>
+                  </div>
+                  <hr class="mt-6 border-b-1 border-gray-400" />
                 </div>
                 <div class="flex-auto px-4 lg:px-10 py-2 pt-0">
+                  <div class="text-gray-700 text-center mb-5 font-bold text-lg">
+                    <small>Or Register with your credentials</small>
+                  </div>
                   <form>
-                    <div class="relative w-full flex mb-3">
+                    <div class="relative w-full flex flex-col-auto mb-3">
                       <div class="relative w-full mb-3 flex flex-col me-4">
                         <label
                         class="block uppercase text-gray-700 text-xs font-bold mb-2"
@@ -177,7 +192,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import router from "@/router";
 
 const url = "http://13.234.17.232"
@@ -253,3 +267,15 @@ export default {
   }
 }
 </script>
+
+<style>
+#view {
+    background: linear-gradient(90deg, rgba(216,235,199,1) 0%, rgba(255,255,255,1) 99%)
+}
+@media (max-width: 1068px) {
+  .form {
+    width: 140%;
+  }
+}
+
+</style>

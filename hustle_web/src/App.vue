@@ -10,18 +10,33 @@
     <div class="lg:flex flex-grow items-center" id="example-navbar-warning">
       <ul class="flex flex-col lg:flex-row list-none lg:ml-auto"> </ul>
       <router-link class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-black hover:opacity-75" to="/"> Home </router-link>
+      <router-link class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-black hover:opacity-75" to="/services"> Services </router-link>
       <router-link class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-black hover:opacity-75" to="/about"> About </router-link>
       <ul class="flex flex-col lg:flex-row list-none lg:ml-auto"> </ul>
-      <router-link class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-black hover:opacity-75" to="/signin"> Sign in </router-link>
-      <router-link class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-black hover:opacity-75" to="/about"> About </router-link>
+      <router-link class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-black hover:opacity-75" to="/signin"> Sign in | Register </router-link>
+      <router-link class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-black hover:opacity-75" to="/profile"> Profile </router-link>
     </div>
   </div>
   </nav>
-  <router-view/>
+  <router-view id="view"/>
+  <div>
+  </div>
 </template>
 
 <script>
+import FooterVue from './components/Footer.vue';
+
 export default {
   name: 'App',
+  components: {
+    FooterVue
+  }
 };
 </script>
+
+<style>
+body {
+  font-family: 'Poppins+Inline+One', sans-serif;
+}
+
+</style>

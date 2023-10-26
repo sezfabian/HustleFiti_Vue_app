@@ -4,6 +4,9 @@ import AboutView from '../views/AboutView.vue'
 import SigninView from '../views/SigninView.vue'
 import SignupView from '../views/SignupView.vue'
 import UploadView from '../views/UploadView.vue'
+import ServicesView from '../views/ServicesView.vue'
+import ProfileView from '../views/ProfileView.vue'
+
 
 const routes = [
   {
@@ -30,6 +33,16 @@ const routes = [
     path: '/upload',
     name: 'upload',
     component: UploadView
+  },
+  {
+    path: '/services',
+    name: 'services',
+    component: ServicesView
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: ProfileView,
   }
 ]
 

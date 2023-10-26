@@ -1,10 +1,16 @@
 <template>
+
     <h1> Upload Image </h1>
     <button @click="openUploadWidget()"> Upload </button>
+    <NucleoIconsSectionVue />
 </template>
 
 <script>
+
 export default {
+    components: {
+        
+    },
     methods: {
         openUploadWidget() {
             const widget = window.cloudinary.openUploadWidget({

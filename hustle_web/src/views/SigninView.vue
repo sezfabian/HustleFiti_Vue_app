@@ -1,13 +1,13 @@
 <template>
   <div>
     <main>
-      <section class="absolute w-full h-full">
+      <section id="view" class="absolute w-full h-full">
         <div
-          class="absolute top-0 w-full h-full bg-#045b4c"
+          class="absolute top-0 w-full h-full"
         ></div>
-        <div class="container mx-auto px-4 h-full bg-#045b4c">
+        <div class="container mx-auto px-4 h-full">
           <div class="flex content-center items-center justify-center h-full">
-            <div class="w-full lg:w-5/12 px-4">
+            <div class="w-full lg:w-4/12 px-4">
               <div
                 class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-100 border-0"
               >
@@ -114,10 +114,8 @@
 </template>
 
 <script>
-import axios from "axios";
 import router from "@/router";
-
-const url = "http://13.234.17.232"
+import axios from "axios";
 
 export default {
   name: "login-page",
@@ -128,13 +126,14 @@ export default {
     return {
       user: {
         email: "",
-        password: ""
+        password: "",
+        cookie: document.cookie
       },
       verify: {
         password: "",
         isVisible: false,
         message: ""
-      }
+      },
     };
   },
   methods: {
@@ -153,10 +152,24 @@ export default {
         return;
       } 
 
-      axios.post(url + "/user/sessions", this.user)
+      this.$instance.post("/user/sessions", this.user, { withCredentials: true , headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          }
+        },)
         .then((response) => {
-          console.log(response);
-          router.push({ path: "/" });
+          console.log(response.data.email);
+          console.log(response.headers);
+          this.verify.isVisible = true;
+          this.verify.message = "Login successful";
+          this.$Cookies.set('email', response.data["email"]);
+          this.$Cookies.set('session_id', response.data["encrypted_session_id"]);
+          console.log(this.$Cookies.get('email'));
+          console.log(this.$Cookies.get('session_id'));
+          setTimeout(() => {
+            router.push({ path: "/" });
+          }, 1000);
+          return;
         })
         .catch((error) => {
             this.verify.isVisible = true;
@@ -166,8 +179,7 @@ export default {
     },
     redirect(path) {
       router.push({ path: path });
-    },
-
+    }
   }
 }
 </script>
