@@ -19,8 +19,7 @@
   </div>
   </nav>
   <router-view id="view"/>
-  <div>
-  </div>
+  <FooterVue/>
 </template>
 
 <script>
