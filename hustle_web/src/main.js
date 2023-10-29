@@ -23,6 +23,7 @@ app.use(Cookies)
 app.config.globalProperties.$instance = instance
 app.config.globalProperties.$serverURL =  "http://13.234.17.232"
 app.config.globalProperties.$Services = []
+app.config.globalProperties.$myServices = []
 app.config.globalProperties.$user = []
 app.config.globalProperties.$Cookies = Cookies
 app.mount('#app')

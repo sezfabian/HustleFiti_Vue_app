@@ -1,82 +1,51 @@
 <template>
   <div class="relative container mb-10 mt-10">
       <div class="text">
-         Create your new User Account
+         Log in to your account
       </div>
       <form @submit.prevent="submitForm">
          <div class="form-row">
             <div class="input-data">
-               <input v-model="user.first_name" type="text" required id="first_name" autocomplete="on">
+               <input v-model="user.email" type="text" required id="name" autocomplete="on">
                <div class="underline"></div>
-               <label for="first_name">First Name:</label>
-            </div>
-            <div class="input-data">
-               <input v-model="user.last_name" type="text" required id="last_name" autocomplete="on">
-               <div class="underline"></div>
-               <label for="last_name">Last Name:</label>
+               <label for="name">Email</label>
             </div>
          </div>
          <div class="form-row">
             <div class="input-data">
-               <input v-model="user.username" type="text" required id="username" autocomplete="off">
+               <input v-model="user.password" type="password" required id="email" autocomplete="on">
                <div class="underline"></div>
-               <label for="username">Username:</label>
+               <label for="password">Password</label>
             </div>
          </div>
-         <div class="form-row">
-            <div class="input-data">
-               <input v-model="user.email" type="text" required id="email" autocomplete="on">
-               <div class="underline"></div>
-               <label for="email">Email:</label>
-            </div>
-         </div>
-         <div class="form-row">
-            <div class="input-data">
-               <input v-model="user.password" type="password" required id="password" autocomplete="off">
-               <div class="underline"></div>
-               <label for="password">Password:</label>
-            </div>
-            <div class="input-data">
-               <input v-model="verify.password" type="password" required id="password" autocomplete="off">
-               <div class="underline"></div>
-               <label for="password">Retype Password:</label>
-            </div>
-         </div>
-         <div class="form-row">
-            <div class="input-data">
-               <input v-model="user.date_of_birth" type="date" required id="dateOfBirth" autocomplete="on"
-                class="text-white focus:text-gray-900">
-               <div class="underline"></div>
-               <label for="date z-2">Date of Birth:</label>
-            </div>
-            <div class="input-data pt-5 w-full">Gender: 
-               <select v-model="user.gender" required id="gender" class="ms-10">
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Other">Other</option>
-               </select>
-               <div class="underline"></div>
-            </div>
-         </div>
-
+         <div class="flex justify-center">
+            <label class="inline-flex items-center cursor-pointer">
+                <input id="customCheckLogin"
+                 type="checkbox"
+                 class="form-checkbox border-0 rounded text-gray-800 ml-1 w-5 h-5"
+                 style="transition: all 0.15s ease 0s;"/>
+                    <span class="ml-2 ms-4 text-sm font-semibold text-gray-700"
+                    >Remember me</span>
+            </label>
+        </div>
          <div v-if="verify.isVisible" class="flash-message text-red-600">
             {{ verify.message }}
          </div>
-         <div class="form-row flex justify-center submit-btn" @click="register()">
+         <div class="form-row flex justify-center submit-btn" @click="login()">
                <div class="input-data">
                   <div class="inner"></div>
-                  <input type="submit" value="Sign Up">
+                  <input type="submit" value="Sign In">
                </div>
         </div>
         <div class="flex flex-wrap ms-4 me-4 mt-6 mb-4">
             <div class="w-1/2">
-                <a href="#signin" class="text-gray-700 text-lg hover:text-red-500">
-                    <small>Got an Account?</small>
+                <a href="#forgot_password" class="text-gray-700 text-lg hover:text-red-500">
+                    <small>Forgot password?</small>
                 </a>
             </div>
             <div class="w-1/2 text-right">
-                <a href="#" class="text-gray-700 text-lg hover:text-red-500">
-                    <small>Not Today?</small>
+                <a href="#signup" class="text-gray-700 text-lg hover:text-red-500">
+                    <small>Create new account</small>
                 </a>
             </div>
         </div>
@@ -85,21 +54,17 @@
 </template>
 
 <script>
-import router from "@/router";
+import router from '@/router/index.js';
 
 export default {
-  name: "SignupForm",
+  name: "ContactForm",
 
   data() {
     return {
       user: {
         email: "",
         password: "",
-        first_name: "",
-        last_name: "",
-        username: "",
-        date_of_birth: "",
-        gender: "",
+        cookie: document.cookie
       },
       verify: {
         password: "",
@@ -110,55 +75,47 @@ export default {
   },
 
   methods: {
-    register() {
-      if (this.user.email === "" || this.user.password === "" || this.user.first_name === "" || this.user.last_name === "" || this.user.username === "" || this.user.date_of_birth === "" || this.user.gender === "") {
+    login() {
+      if (this.user.email === "" || this.user.password === "") {
         this.verify.isVisible = true;
         this.verify.message = "Please fill in all fields";
-        return;          
-      }
-      
-      if (this.user.username.length < 3 || this.user.username.length > 20) {
-        this.verify.isVisible = true;
-        this.verify.message = "Username must be at least 3 characters and at most 20 characters";
-        return;
-      }
-
-      if (this.user.password !== this.verify.password) {
-        this.verify.isVisible = true;
-        this.verify.message = "Passwords do not match";
         return;
       }
 
       const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.user.email);
-      const str = this.user.password
-      const isValidPassword = /[A-Z]/.test(str) && /[0-9]/.test(str) && /[!@#$%^&*]/.test(str) && str.length >= 8 && /[a-z]/.test(str);
-      
+
       if (!isValidEmail) {
         this.verify.isVisible = true;
         this.verify.message = 'Invalid email format';
         return;
-      } else if (!isValidPassword) {
-        this.verify.isVisible = true;
-        this.verify.message = 'Password must contain at least one uppercase letter, one digit, one special character, and be at least 8 characters long';
-        return;
-      }
+      } 
 
-      this.$instance.post("/user/register", this.user)
-        .then((response) => {
-          console.log("Registration Success");
-          router.push({ path: "/" });
-        })
-        .catch((error, response) => {
-          if (error.response) {
-            this.verify.isVisible = true;
-            this.verify.message = error.response.data.detail;
-            console.log(error.response.data.detail);
+      this.$instance.post("/user/sessions", this.user, { withCredentials: true , headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
           }
+        },)
+        .then((response) => {
+          console.log(response.data.email);
+          console.log(response.headers);
+          this.verify.isVisible = true;
+          this.verify.message = "Login successful";
+          this.$Cookies.set('email', response.data["email"]);
+          this.$Cookies.set('session_id', response.data["encrypted_session_id"]);
+          setTimeout(() => {
+            router.push({ path: "/services" });
+          }, 1000);
+          return;
+        })
+        .catch((error) => {
+            this.verify.isVisible = true;
+            this.verify.message = "Email or password is incorrect";
+            console.log(error.response.data.detail);
         });
     },
     redirect(path) {
       router.push({ path: path });
-    },
+    }
   }
 };
 </script>

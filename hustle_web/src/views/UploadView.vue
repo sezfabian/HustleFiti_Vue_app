@@ -2,13 +2,18 @@
 
     <h1> Upload Image </h1>
     <button @click="openUploadWidget()"> Upload </button>
-    <NucleoIconsSectionVue />
+    <div class="flex justify-center items-center">
+    <EditService class="relative"/>
+    </div>
 </template>
 
 <script>
+import EditService from '@/components/EditService.vue';
+
 
 export default {
     components: {
+        EditService
         
     },
     methods: {
