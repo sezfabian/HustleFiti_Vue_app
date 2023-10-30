@@ -20,6 +20,14 @@
                style="transition: all 0.15s ease 0s;">
                <img alt="..." class="w-5 mr-1" src="../assets/img/image.svg"/>Upload Image
               </button>
+              <button class="bg-white active:bg-gray-100 text-gray-800
+               font-normal px-4 py-2 rounded outline-none focus:outline-none
+               mr-1 mb-1 uppercase shadow hover:shadow-2xl inline-flex items-center text-xs"
+               type="button"
+               @click="deleteImage()"
+               style="transition: all 0.15s ease 0s;">
+               <img alt="..." class="w-5 ms-5 mr-1" src="../assets/img/trash.svg"/>Delete Image
+              </button>
           </div>
           <hr class="mt-6 border-b-1 border-gray-400" />
         </div>
@@ -27,7 +35,7 @@
       <form @submit.prevent="submitForm">
          <div class="form-row">
             <div class="input-data">
-              <select v-model="selectedCategory">
+              <select v-model="editedService.service_category_id">
                 <option v-for="category in categories" :key="category.id" :value="category.id">
                   {{ category.name }}
                 </option>
@@ -38,14 +46,14 @@
          </div>
          <div class="form-row">
             <div class="input-data">
-               <input v-model="editedService.name" type="text" required id="name" autocomplete="on">
+               <input v-model="editedService.sub_category" type="text" optional id="sub_Category" autocomplete="on">
                <div class="underline"></div>
-               <label for="name">Service Name</label>
+               <label for="name">Sub Category:</label>
             </div>
          </div>
          <div class="form-row">
             <div class="input-data">
-               <input v-model="editedService.service_category_id" type="text" required id="name" autocomplete="on">
+               <input v-model="editedService.name" type="text" required id="name" autocomplete="on">
                <div class="underline"></div>
                <label for="name">Service Name</label>
             </div>
@@ -70,13 +78,13 @@
         </div>
         <div class="flex flex-wrap ms-4 me-4 mt-6 mb-4">
             <div class="w-1/2">
-                <a href="#forgot_password" class="text-gray-700 text-lg hover:text-red-500">
-                    <small>Forgot password?</small>
+                <a href="#profile" class="text-gray-700 text-lg hover:text-red-500">
+                    <small>Dismiss Changes</small>
                 </a>
             </div>
             <div class="w-1/2 text-right">
-                <a href="#signup" class="text-gray-700 text-lg hover:text-red-500">
-                    <small>Create new account</small>
+                <a @click="deleteService()" class="text-gray-700 text-lg hover:cursor-pointer hover:text-red-500">
+                    <small>Delete Service</small>
                 </a>
             </div>
         </div>
@@ -102,7 +110,15 @@ export default {
         description: "",
         locations: "",
         service_category_id: "",
+        sub_category: "",
         image_paths: "",
+      },
+
+      service_id: "",
+
+      editedPricePackage: {
+        duration: "",
+        price: "",
       },
       
       verify: {
@@ -110,6 +126,7 @@ export default {
           message: ""
       },
       categories: [],
+      selectedCategory: "",
     };
   },
   created() {
@@ -130,7 +147,7 @@ export default {
         })
     },
     fetchService() {
-      this.$instance.get("/services/" + this.id)
+      this.$instance.get("/services/" + this.$route.params.id)
         .then(response => {
           this.editedService = response.data;
         })
@@ -139,15 +156,22 @@ export default {
         });
     },
     submitForm() {
-      this.$instance.put("/services/" + this.id, this.editedService)
+      this.$instance.put("/services/" + this.$route.params.id, this.editedService, {
+        params: {
+          "encrypted_session_id": this.$Cookies.get("session_id")
+        }
+      })
         .then(response => {
           this.verify.isVisible = true;
           this.verify.message = "Service updated successfully";
+          setTimeout(() => {
+            router.push({ path: "/profile" });
+          }, 1000);
         })
         .catch(error => {
           console.log(error);
           this.verify.isVisible = true;
-          this.verify.message = "Something went wrong";
+          this.verify.message = response.data.detail;
         })
     },
 
@@ -183,6 +207,35 @@ export default {
 
         return "https://i.postimg.cc/8zh6Fv2C/custom.png";  
     },
+
+    // delete image
+    deleteImage() {
+        const image_list = this.editedService.image_paths.split(',');
+        const index = image_list.length - 1;
+        this.editedService.image_paths = image_list.slice(0, index).join(',');
+        return;
+    },
+
+    // delete service
+    deleteService() {
+        this.$instance.delete("/services/" + this.$route.params.id, {
+            params: {
+                "encrypted_session_id": this.$Cookies.get("session_id")
+            }
+        })
+        .then(response => {
+            this.verify.isVisible = true;
+          this.verify.message = "Service updated successfully";
+          setTimeout(() => {
+            router.push({ path: "/profile" });
+          }, 1000);
+        })
+        .catch(error => {
+          console.log(error);
+          this.verify.isVisible = true;
+          this.verify.message = response.data.detail;
+        })
+    }
   },
   mounted() {
     this.fetchService();

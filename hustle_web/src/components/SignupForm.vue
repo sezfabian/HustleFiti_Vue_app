@@ -324,7 +324,7 @@ form .form-row .textarea{
     margin: 35px 0!important;
   }
   .submit-btn .input-data{
-    width: 40%!important;
+    width: 100%!important;
   }
 }
 </style>

@@ -9,8 +9,19 @@
       <router-link class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-black hover:opacity-75" to="/services"> Services </router-link>
       <router-link class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-black hover:opacity-75" to="/about"> About </router-link>
       <ul class="flex flex-col lg:flex-row list-none lg:ml-auto"> </ul>
-      <router-link class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-black hover:opacity-75" to="/signin"> Sign in | Register </router-link>
-      <router-link class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-black hover:opacity-75" to="/profile"> Profile </router-link>
+      <router-link
+       v-if="!this.$Cookies.get('session_id')"
+       class="px-3 py-2 flex items-center text-xs uppercase font-bold
+       leading-snug text-black hover:opacity-75" to="/signin"> Sign in | Register </router-link>
+      <router-link 
+       v-if="this.$Cookies.get('email')"
+       class="px-3 py-2 flex items-center text-s lowercase
+       font-bold leading-snug text-black hover:opacity-60" to="/profile">
+       {{ this.$Cookies.get('email') }} > </router-link>
+      <p
+       v-if="this.$Cookies.get('session_id')"
+       class="px-3 py-2 flex items-center text-xs uppercase font-bold
+       leading-snug text-black hover:opacity-75 hover:cursor-pointer" @click="logout()"> Logout </p>
     </div>
   </div>
   </nav>
@@ -21,11 +32,22 @@
 <script>
 import FooterVue from './components/Footer.vue';
 
+
 export default {
   name: 'App',
   components: {
     FooterVue
   },
+
+  methods: {
+    logout() {
+      this.$Cookies.remove('user_id');
+      this.$Cookies.remove('email');
+      this.$Cookies.remove('session_id');
+      this.$router.push('/');
+      location.reload();
+    }
+  }
 };
 </script>
 

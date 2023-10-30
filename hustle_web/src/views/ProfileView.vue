@@ -143,8 +143,6 @@ export default {
     },
     methods: {
         getUser() {
-            console.log(this.$Cookies.get('email'))
-            console.log(this.$Cookies.get('session_id'))
             this.$instance.get("/user/profile",  {
                 params: {
                   "encrypted_session_id": this.encrypted_session_id

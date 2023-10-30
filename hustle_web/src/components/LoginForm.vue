@@ -32,7 +32,7 @@
             {{ verify.message }}
          </div>
          <div class="form-row flex justify-center submit-btn" @click="login()">
-               <div class="input-data">
+               <div class="input-data inline-flex items-center ">
                   <div class="inner"></div>
                   <input type="submit" value="Sign In">
                </div>
@@ -110,11 +110,10 @@ export default {
         .catch((error) => {
             this.verify.isVisible = true;
             this.verify.message = "Email or password is incorrect";
-            console.log(error.response.data.detail);
         });
     },
     redirect(path) {
-      router.push({ path: path });
+      router.push({ path: path, force: true });
     }
   }
 };
@@ -281,7 +280,7 @@ form .form-row .textarea{
     margin: 35px 0!important;
   }
   .submit-btn .input-data{
-    width: 40%!important;
+    width: 100%!important;
   }
 }
 </style>

@@ -4,12 +4,13 @@
     <div v-for="(service, index) in services" :key="service.id" class="serviceitem
      flex flex-col  bg-transparent mt-5 rounded-xl text-center">
       <div class="rounded-full relative p-7">
-        <img :src="getImageUrl(service.image_paths)" class="rounded-full object-cover" alt="No image" />
+        <img :src="getImageUrl(service.image_paths)" class="rounded-full h-[200px] object-cover" alt="No image" />
       </div>
       <div class="mt-4 mb-3 text-center">
         <h3 class="text-xl font-semibold">{{ service.name }}</h3>
-        <div class="mt-2">
-          <p><bold class="font-bold">Description: </bold>{{ service.description }}</p>
+        <button @click="toggleDescription(index)" class="text-blue-500 mt-2 cursor-pointer hover:underline">Show Description </button>
+        <div v-if="service.showDescription" class="mt-2">
+          <p>{{ service.description }}</p>
         </div>
         <div>
           <p><bold class="font-bold">Locations: </bold>  {{ service.locations.length > 0 ? service.locations : 'N/A' }}</p>
@@ -21,7 +22,7 @@
       
         <button class="mt-2 bg-gray-900 text-white  px-4 py-2 rounded-full
         hover:bg-blue-600"
-          @click="redirect('/edit-service/' + service.id)">>Edit Service</button>
+          @click="redirect('/edit-service/' + service.id)"> Edit Service</button>
       </div>
     </div>
   </div>
@@ -51,13 +52,19 @@ export default {
       return images.split(',')[0];
     },
     fetchServices() {
-      this.user_id = this.$Cookies.get('user_id');
-      this.$instance.get("/services")
-        .then(response => {
-          this.services = response.data.filter(service => service.user_id == this.user_id);
-          console.log(this.services);
+      this.$instance.get("/services/")
+        .then((response) => {
+          this.services = response.data.map(service => {
+          return {
+            ...service,
+            showDescription: false // Initially set to false, indicating descriptions are hidden
+          };
+          });
+          this.services = this.services.filter(service => {
+            return service.user_id == this.$Cookies.get('user_id');
+          });
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error.response.data.detail);
         })
     },
@@ -68,6 +75,7 @@ export default {
   },
   mounted() {
     this.fetchServices();
+    this.user_id = this.$Cookies.get('user_id');
   },
 };
   
