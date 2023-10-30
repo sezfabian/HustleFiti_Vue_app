@@ -160,7 +160,6 @@ export default {
     }
   },
    mounted() {
-    location.reload;
     this.fetchServices();
     this.fetchCategories();
     this.changeImagesAutomatically();
