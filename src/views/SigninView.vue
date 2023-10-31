@@ -11,7 +11,23 @@ export default {
   name: 'SigninView',
   components: {
     LoginFormVue
+  },
+
+  methods: {
+    checkLoginStatus() {
+      if (this.$Cookies.get('session_id')) {
+        this.$router.push('/services')
+      }
+    }
+  },
+  created() {
+    this.checkLoginStatus()
+  },
+
+  mounted() {
+    this.checkLoginStatus()
   }
+
 }
 </script>
 

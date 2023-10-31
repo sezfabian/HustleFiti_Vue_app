@@ -103,7 +103,7 @@ export default {
           this.$Cookies.set('email', response.data["email"]);
           this.$Cookies.set('session_id', response.data["encrypted_session_id"]);
           setTimeout(() => {
-            router.push({ path: "/services" });
+            location.reload();
           }, 1000);
           return;
         })
