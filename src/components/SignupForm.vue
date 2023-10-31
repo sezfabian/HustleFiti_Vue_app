@@ -100,6 +100,8 @@ export default {
         username: "",
         date_of_birth: "",
         gender: "",
+        user_image_path: "../assets/img/favicon.png",
+        user_banner_path: "../assets/img/green.jpg",
       },
       verify: {
         password: "",

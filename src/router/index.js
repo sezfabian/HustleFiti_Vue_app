@@ -6,7 +6,9 @@ import SignupView from '../views/SignupView.vue'
 import UploadView from '../views/UploadView.vue'
 import ServicesView from '../views/ServicesView.vue'
 import ProfileView from '../views/ProfileView.vue'
+import NewServiceView from '../views/NewServiceView.vue'
 import EditServiceView from '../views/EditServiceView.vue'
+import EditProfileView from '../views/EditProfileView.vue'
 
 const routes = [
   {
@@ -45,10 +47,20 @@ const routes = [
     component: ProfileView,
   },
   {
+    path: '/new-service',
+    name: 'new-service',
+    component: NewServiceView
+  },
+  {
     path: '/edit-service/:id',
     name: 'edit-service',
     component: EditServiceView,
     props: true
+  },
+  {
+   path: '/edit-profile',
+   name: 'edit-profile',
+   component: EditProfileView 
   }
 ]
 

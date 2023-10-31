@@ -1,20 +1,21 @@
 <template>
   <div class="profile w-full relative">
-    <img src="../assets/img/green.png" class="h-[50vh] w-full object-cover">
+    <img :src="profileBanner" class="h-[50vh] w-full object-cover">
     <div class="card object-top w-full flex top-[20px]">
       <div class="flex flex-col align-middle">
       </div>
     </div>
   </div>
-    <div class="cards flex flex-col w-full relative top-[-220px] mb-5">
-      <div class="avatar object-left  w-[400px] z-10">
-          <div class="rounded-tl-[100%] rounded-br-[100%] z-10 m-10 bg-stone-100 dark:bg-black 
-           absolute sm:w-[400px] md:w-[350px] top-[-130px] lg:top-[-220px]">
-            <img src="../assets/img/hustle.png" />
+    <div class="cards flex flex-col relative top-[-220px] mb-5">
+      <div class="avatar object-left rounded-full w-[400px] z-10">
+          <div class="rounded-full w-[300px] z-10 m-10 ms-9 bg-stone-100 dark:bg-black 
+           absolute sm:w-[300px] md:w-[250px] max-w-[300px] top-[-130px] lg:top-[-130px]">
+            <img :src="profileImage" alt="No image" class="rounded-full w-[260px]
+            border-[10px] ms-5 object-cover" />
           </div>
         </div>
       <div class="card-body bg-stone-100 rounded-lg sm:ms-0 md:ms-10 lg:ms-[40px] lg:w-[400px] lg:mt-11 flex-col w-1/4 p-10 z-5 font-family: Poppins">
-      <form class="sm:w-full md:w-full lg:w-full flex flex-col">
+      <form class="sm:w-full md:w-full lg:w-full flex flex-col mt-16">
         <h1 class="text-3xl text-green-900 font-bold text-center  mb-4 z-10 username">{{profile.username}}</h1>
         <star-rating v-model:rating="profile.average_rating" disabled star-size="40" class="ms-10"></star-rating>
                     <div class="relative w-full flex flex-col">
@@ -44,7 +45,7 @@
                         >Phone:</label>
                       <p class="text-black text-l
                         flex mt-3"
-                        >{{ profile.phone }}</p>
+                        >{{ profile.phone_number }}</p>
                     </div>
                     <div class="relative w-full flex mb-3">
                       <label
@@ -72,12 +73,14 @@
                          hover:bg-green-700 outline-none focus:outline-none mr-1 mb-1 w-full"
                         type="button"
                         style="transition: all 0.15s ease 0s;"
+                        @click="this.$router.push('/edit-profile')"
                       >
                         Edit Profile
                       </button>
                   </div>
       </div>
-    <div class="relative flex flex-col justify-center w-full lg:w-[70vw] md:w-[30vw]  bg-stone-100 lg:left-[+490px] lg:top-[-475px] lg:rounded-lg">
+    <div class="relative flex flex-col justify-center lg:w-[68vw] w-full
+     bg-stone-100 lg:left-[+490px] lg:top-[-540px] lg:rounded-lg">
       <ul class="lg:flex hover:cursor-pointer justify-between mb-5 ml-10 mt-5">
         <li class="flex-grow">
 
@@ -105,16 +108,6 @@
         </li>
       </ul>
       <userServices/>
-      <div class="text-center justify-center flex mt-6">
-          <button
-            class="bg-green-900 text-white text-sm font-bold uppercase px-6 py-3
-            rounded-full shadow hover:bg-green-700 outline-none focus:outline-none mr-1 mb-1 w-[200px]"
-            type="button"
-            style="transition: all 0.15s ease 0s;"
-            @click="redirect('/add_service')"
-            > Add Service
-          </button>
-      </div>
     </div>
   </div>
 
@@ -137,7 +130,9 @@ export default {
         return {
             isNewService: false,
             profile: {},
-            isEditing: false, 
+            isEditing: false,
+            profileImage: '',
+            profileBanner: '',
             encrypted_session_id: this.$Cookies.get('session_id')
         }
     },
@@ -152,6 +147,8 @@ export default {
                     console.log(response.data)
                     this.profile = response.data
                     this.$Cookies.set('user_id', response.data["id"])
+                    this.profileImage = response.data["user_image_path"]
+                    this.profileBanner = response.data["user_banner_path"]
                 })
                 .catch((error) => {
                     console.log(error.response.data.detail)
@@ -161,9 +158,6 @@ export default {
         redirect(path) {
           router.push({ path: path });
         },
-        toogleNewService() {
-            this.isNewService = !this.isNewService
-        }
     },
     created() {
         this.getUser()

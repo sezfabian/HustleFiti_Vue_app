@@ -31,11 +31,16 @@
           <p>{{ service.description }}</p>
         </div>
         <div>
-          <p>Locations: {{ getLocations(service.locations) }}</p>
+          <p>Locations:</p>
         </div>
+          <div class="tag-container">
+              <div class="tag" v-for="(location, index) in getLocations(service.locations)" :key="index">
+                {{ location }}
+              </div>
+            </div>
         <div class="mt-2">
-          <p>{{ service.price_packages.length > 0 ? service.price_packages[0].duration : 'Contact for Details' }}</p>
-          <p>{{ service.price_packages.length > 0 ? service.price_packages[0].price : 'Contact for Price' }}</p>
+          <p>{{ service.price_packages.length > 0 ? service.price_packages[0].duration : '1' }} Hour/s</p>
+          <p>Ksh: {{ service.price_packages.length > 0 ? service.price_packages[0].price : 'Contact for Price' }}</p>
         </div>
         <button class="mt-2 bg-green-800 text-white px-4 py-2 hover:bg-gray-600">Book Now</button>
       </div>
@@ -173,5 +178,20 @@ export default {
     font-family: 'Poppins', sans-serif;
 h1 {
   font-family: 'Poppins', sans-serif;
+}
+
+.tag-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 15px;
+}
+
+.tag {
+  background-color: #0b110e;
+  color: white;
+  border-radius: 20px;
+  padding: 5px 10px;
+  display: block;
+  margin-left: -15px;
 }
 </style>
