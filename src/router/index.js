@@ -10,6 +10,7 @@ import NewServiceView from '../views/NewServiceView.vue'
 import EditServiceView from '../views/EditServiceView.vue'
 import EditProfileView from '../views/EditProfileView.vue'
 import BookingView from '../views/BookingView.vue'
+import VerificationView from '../views/VerificationView.vue'
 
 const routes = [
   {
@@ -68,6 +69,11 @@ const routes = [
     name: 'booking',
     component: BookingView,
     props: true
+  },
+  {
+    path: '/verification',
+    name: 'verification',
+    component: VerificationView
   }
 ]
 

@@ -10,6 +10,7 @@
     <button
      class="bg-green-900 active:bg-gray-100  text-white font-normal mt-6 px-10 py-5 rounded-full outline-none focus:outline-none mr-1 mb-1 shadow hover:shadow-2xl align-middle inline-flex items-center text-xs"
      type="button"
+     @click="$router.push('/services')"
      style="transition: all 0.15s ease 0s;">
      Hire Now </button>
   </div>
