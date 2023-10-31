@@ -88,15 +88,13 @@
             </li>
         </ul>
     </div>
+  </div>
 </template>
 
 
 <script>
 export default {
   name: 'FeaturedVue',
-  props: {
-   
-  }
 }
 </script>
 
@@ -148,7 +146,7 @@ li {
     width: 250px;
     height: 250px;
     border-radius: 50%;
-    background-image: url('./imagesFEATURED/workman-with-his-arms-crossed.jpg');
+    background-image: url('../assets/img/favicon.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
