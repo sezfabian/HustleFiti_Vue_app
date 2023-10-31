@@ -114,7 +114,7 @@
          <div v-if="verify.isVisible" class="flash-message flex justify-center text-center text-red-600">
             {{ verify.message }}
          </div>
-         <div class="form-row flex justify-center submit-btn" @click="submitForm()">
+         <div class="form-row flex justify-center submit-btn" @click="createService()">
                <div class="input-data">
                   <div class="inner"></div>
                   <input type="submit" value="Save Changes">
@@ -181,7 +181,7 @@ export default {
         })
     },
 
-    submitForm() {
+    createService() {
       if (this.Service.name === "") {
         this.verify.isVisible = true;
         this.verify.message = "Service Name is required";

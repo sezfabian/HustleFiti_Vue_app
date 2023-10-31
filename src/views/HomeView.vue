@@ -1,25 +1,35 @@
 <template>
+<div>
   <div class="home flex-col-reverse flex" style="font-family: 'Poppins', sans-serif;">
     <img alt="Vue logo" src="../assets/img/hustle.png" class="myimg ml-10 mt-10">
     <div class="mt-10">
       <welcome class="ps-20 intro" msg=""/>
     </div>
   </div>
-  <div>
-    <Featured/>
+  <div class="bg-green-200 bg-opacity-30">
+  <FeaturedServices @bookService="handleBooking" />
+  </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import Welcome from '@/components/Welcome.vue'
-import FeaturedVue from '@/components/Featured.vue'
+import FeaturedServices from '@/components/FeaturedServices.vue'
 
 export default {
   name: 'HomeView',
   components: {
-    Welcome, FeaturedVue
+    Welcome, FeaturedServices
+  },
+
+  methods: {
+    handleBooking(serviceId) {
+      console.log(serviceId);
+      this.$router.push('/booking/:' + serviceId);
+    }
   }
+  
 }
 </script>
 
