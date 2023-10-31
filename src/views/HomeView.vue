@@ -5,18 +5,20 @@
       <welcome class="ps-20 intro" msg=""/>
     </div>
   </div>
-  <services/>
+  <div>
+    <Featured/>
+  </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import Welcome from '@/components/Welcome.vue'
-import Featured from '@/components/Featured.vue'
+import FeaturedVue from '@/components/Featured.vue'
 
 export default {
   name: 'HomeView',
   components: {
-    Welcome, Featured
+    Welcome, FeaturedVue
   }
 }
 </script>

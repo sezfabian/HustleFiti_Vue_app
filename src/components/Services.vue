@@ -42,7 +42,8 @@
           <p>{{ service.price_packages.length > 0 ? service.price_packages[0].duration : '1' }} Hour/s</p>
           <p>Ksh: {{ service.price_packages.length > 0 ? service.price_packages[0].price : 'Contact for Price' }}</p>
         </div>
-        <button class="mt-2 bg-green-800 text-white px-4 py-2 hover:bg-gray-600">Book Now</button>
+        <button class="mt-2 bg-green-800 text-white px-4 py-2 hover:bg-gray-600"
+        @click="bookService(service.id)">Book Now</button>
       </div>
     </div>
   </div>
@@ -53,6 +54,8 @@ import router from "@/router";
 
 export default {
   name: 'Services',
+  emits: ['bookService'],
+
   data() {
     return {
       search: "",
@@ -162,6 +165,9 @@ export default {
       }
 
       return this.filtered;
+    },
+    bookService(serviceId) {
+      this.$emit("bookService", serviceId);
     }
   },
    mounted() {

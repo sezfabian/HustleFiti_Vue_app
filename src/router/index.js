@@ -9,6 +9,7 @@ import ProfileView from '../views/ProfileView.vue'
 import NewServiceView from '../views/NewServiceView.vue'
 import EditServiceView from '../views/EditServiceView.vue'
 import EditProfileView from '../views/EditProfileView.vue'
+import BookingView from '../views/BookingView.vue'
 
 const routes = [
   {
@@ -61,6 +62,12 @@ const routes = [
    path: '/edit-profile',
    name: 'edit-profile',
    component: EditProfileView 
+  },
+  {
+    path: '/booking/:serviceId',
+    name: 'booking',
+    component: BookingView,
+    props: true
   }
 ]
 
